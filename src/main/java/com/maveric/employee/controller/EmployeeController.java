@@ -1,6 +1,5 @@
 package com.maveric.employee.controller;
 
-//import com.maveric.employee.service.EmployeeServiceImpl;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -16,25 +15,24 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-//    @Autowired
+    //    @Autowired
 //    public EmployeeServiceImpl employeeService;
     @Autowired
-   private JobLauncher jobLauncher;
+    private JobLauncher jobLauncher;
     @Autowired
-   private Job job;
+    private Job job;
 
     @PostMapping("/importEmployees")
-    public  void importCsvToDb()
-    {
-        JobParameters jobParameters=new JobParametersBuilder()
-                .addLong("startAt",System.currentTimeMillis())
+    public void importCsvToDb() {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("startAt", System.currentTimeMillis())
                 .toJobParameters();
-   try{
-       jobLauncher.run(job,jobParameters);
-   }
-   catch (JobInstanceAlreadyCompleteException|JobExecutionAlreadyRunningException| JobParametersInvalidException |JobRestartException e) {
-       e.printStackTrace();
-   }
+        try {
+            jobLauncher.run(job, jobParameters);
+        } catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException |
+                 JobParametersInvalidException | JobRestartException e) {
+            e.printStackTrace();
+        }
 
     }
 
